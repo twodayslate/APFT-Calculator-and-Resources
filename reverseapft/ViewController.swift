@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate {
 
     var situpPicker : UIPickerView! = nil
     var pushupPicker : UIPickerView! = nil
@@ -16,9 +16,10 @@ class ViewController: UITableViewController, UITableViewDataSource, UITableViewD
     var valueLabel : UILabel! = nil
     var segment : UISegmentedControl! = nil
     var runLabel : UILabel! = nil
-     var pushupLabel : UILabel! = nil
-     var situpLabel : UILabel! = nil
+    var pushupLabel : UILabel! = nil
+    var situpLabel : UILabel! = nil
     var inputAge : UITextField! = nil
+    let prefs : NSUserDefaults = NSUserDefaults()
     
     
                                   // This is the score 30-100
@@ -422,173 +423,332 @@ class ViewController: UITableViewController, UITableViewDataSource, UITableViewD
     2301,2255,2249,2243,2231,2225,2219,2213,2201,2155,2149,2143,2131,2125,2119,
     2113,2101,2055,2049,2043,2031,2025,2019,2013,2001,1955];
     
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
+    
+    var scrollview : UIScrollView! = nil
+    var stack : UIStackView! = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.edgesForExtendedLayout = UIRectEdge.None
-        self.extendedLayoutIncludesOpaqueBars = false
-        self.automaticallyAdjustsScrollViewInsets = false
-        self.tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
+        
+        scrollview = UIScrollView()
+        //TODO: add gradient to top
+        scrollview.translatesAutoresizingMaskIntoConstraints = false
+        scrollview.delegate = self
+        self.view.addSubview(scrollview)
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[scrollview]|", options: .AlignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollview]|", options: .AlignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
+        
+        stack = UIStackView()
+        stack.axis = UILayoutConstraintAxis.Vertical
+        //stack.alignment = UIStackViewAlignment.Fill
+        //stack.distribution = UIStackViewDistribution.FillProportionally
+        stack.spacing = 10
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        let topConstraint = NSLayoutConstraint(
+            item: stack,
+            attribute: NSLayoutAttribute.TopMargin,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: scrollview,
+            attribute: NSLayoutAttribute.TopMargin,
+            multiplier: 1.0,
+            constant: UIApplication.sharedApplication().statusBarFrame.size.height + 10)
+        let leftConstraint = NSLayoutConstraint(
+            item: stack,
+            attribute: NSLayoutAttribute.Leading,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: scrollview,
+            attribute: NSLayoutAttribute.Leading,
+            multiplier: 1.0,
+            constant: 20)
+        let rightConstraint = NSLayoutConstraint(
+            item: stack,
+            attribute: NSLayoutAttribute.Trailing,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: scrollview,
+            attribute: NSLayoutAttribute.Trailing,
+            multiplier: 1.0,
+            constant: 20)
+        let widthCon = NSLayoutConstraint(
+            item: stack,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: scrollview,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: 1.0,
+            constant: -60)
+        scrollview.addSubview(stack)
+        scrollview.addConstraint(widthCon)
+        scrollview.addConstraint(topConstraint)
+        scrollview.addConstraint(leftConstraint)
+        scrollview.addConstraint(rightConstraint)
+        
+        prefs.registerDefaults(["gender":0, "age":21, "pushups": 30, "situps": 30, "run":30])
+        
+        segment = UISegmentedControl(items: ["MALE", "FEMALE"]);
+        //TODO: get from previous run
+        segment.selectedSegmentIndex = prefs.integerForKey("gender")
+        segment.addTarget(self, action: #selector(ViewController.updateChanged), forControlEvents: UIControlEvents.ValueChanged)
+        stack.addArrangedSubview(segment)
+        
+        let border_zero = UIView()
+        border_zero.layer.backgroundColor = UIColor.grayColor().CGColor
+        border_zero.backgroundColor = UIColor.grayColor()
+        let borderHeight_zero = NSLayoutConstraint(
+            item: border_zero,
+            attribute: NSLayoutAttribute.Height,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: stack,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 0.0,
+            constant: 1)
+        stack.addArrangedSubview(border_zero)
+        stack.addConstraint(borderHeight_zero)
+        
+        let row_one = UIStackView()
+        let nameLabel_one = UILabel()
+        nameLabel_one.text = "Age"
+        row_one.addArrangedSubview(nameLabel_one)
+        inputAge = UITextField()
+        inputAge.keyboardType = UIKeyboardType.NumberPad
+        inputAge.text = String(prefs.integerForKey("age"))
+        inputAge.placeholder = "21"
+        
+        inputAge.textAlignment = NSTextAlignment.Right
+        inputAge.addTarget(self, action: #selector(ViewController.updateChanged), forControlEvents: UIControlEvents.EditingChanged)
+        // you have to set the frame size otherwise the buttons will not work
+        let helperBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: #selector(ViewController.dismissKeyboard))
+        helperBar.setItems([doneButton], animated: true)
+        inputAge.inputAccessoryView = helperBar
+        row_one.addArrangedSubview(inputAge)
+        let inputCon = NSLayoutConstraint(
+            item: inputAge,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.LessThanOrEqual,
+            toItem: row_one,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: 1.0,
+            constant: 0)
+        row_one.addConstraint(inputCon)
+        stack.addArrangedSubview(row_one)
+        
+        let border = UIView()
+        border.layer.backgroundColor = UIColor.grayColor().CGColor
+        border.backgroundColor = UIColor.grayColor()
+        border.clipsToBounds = true
+        border.hidden = false
+        let borderHeight = NSLayoutConstraint(
+            item: border,
+            attribute: NSLayoutAttribute.Height,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: stack,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 0.0,
+            constant: 1)
+        stack.addArrangedSubview(border)
+        stack.addConstraint(borderHeight)
         
         
+        let row_two = UIStackView()
+        let column_one = UIStackView()
+        column_one.axis = UILayoutConstraintAxis.Vertical
+        let nameLabel_two = UILabel()
+        nameLabel_two.text = "Pushups"
+        nameLabel_two.textAlignment = NSTextAlignment.Center
+        column_one.addArrangedSubview(nameLabel_two)
+        pushupPicker = UIPickerView()
+        pushupPicker.delegate = self
+        pushupPicker.dataSource = self
+        //TODO: get from previous run
+        pushupPicker.selectRow(prefs.integerForKey("pushups"), inComponent: 0, animated: true)
+        column_one.addArrangedSubview(pushupPicker)
+        row_two.addArrangedSubview(column_one)
+        let thirdWidthConstraint_one = NSLayoutConstraint(
+            item: column_one,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: row_two,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: (1.0/3.0),
+            constant: 0)
+        row_two.addConstraint(thirdWidthConstraint_one)
         
-        // Do any additional setup after loading the view, typically from a nib.
+        let column_two = UIStackView()
+        column_two.axis = UILayoutConstraintAxis.Vertical
+        let nameLabel_three = UILabel()
+        nameLabel_three.text = "Situps"
+        nameLabel_three.textAlignment = NSTextAlignment.Center
+        column_two.addArrangedSubview(nameLabel_three)
+        situpPicker = UIPickerView()
+        situpPicker.delegate = self
+        situpPicker.dataSource = self
+        //TODO: get from previous run
+        situpPicker.selectRow(prefs.integerForKey("situps"), inComponent: 0, animated: true)
+        column_two.addArrangedSubview(situpPicker)
+                row_two.addArrangedSubview(column_two)
+        let thirdWidthConstraint_two = NSLayoutConstraint(
+            item: column_two,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: row_two,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: (1.0/3.0),
+            constant: 0)
+        row_two.addConstraint(thirdWidthConstraint_two)
+        
+        let column_three = UIStackView()
+        column_three.axis = UILayoutConstraintAxis.Vertical
+        let nameLabel_four = UILabel()
+        nameLabel_four.text = "Run"
+        nameLabel_four.textAlignment = NSTextAlignment.Center
+        column_three.addArrangedSubview(nameLabel_four)
+        runPicker = UIPickerView()
+        runPicker.delegate = self
+        runPicker.dataSource = self
+        //TODO: get from previous run
+        runPicker.selectRow(prefs.integerForKey("run"), inComponent: 0, animated: true)
+        column_three.addArrangedSubview(runPicker)
+                row_two.addArrangedSubview(column_three)
+        let thirdWidthConstraint_three = NSLayoutConstraint(
+            item: column_three,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: row_two,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: (1.0/3.0),
+            constant: 0)
+        row_two.addConstraint(thirdWidthConstraint_three)
+        
+        stack.addArrangedSubview(row_two) //pickers
+        
+        let border_two = UIView()
+        border_two.layer.backgroundColor = UIColor.grayColor().CGColor
+        border_two.backgroundColor = UIColor.grayColor()
+        let borderHeight_two = NSLayoutConstraint(
+            item: border_two,
+            attribute: NSLayoutAttribute.Height,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: stack,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 0.0,
+            constant: 1)
+        stack.addArrangedSubview(border_two)
+        stack.addConstraint(borderHeight_two)
+        
+        let row_three = UIStackView()
+        let nameLabel_five = UILabel()
+        nameLabel_five.text = "Total Score"
+        row_three.addArrangedSubview(nameLabel_five)
+        valueLabel = UILabel()
+        valueLabel.text = "-"
+        valueLabel.textAlignment = NSTextAlignment.Right
+        valueLabel.textColor = UIColor.grayColor()
+        row_three.addArrangedSubview(valueLabel)
+        stack.addArrangedSubview(row_three)
+        
+        let border_three = UIView()
+        border_three.layer.backgroundColor = UIColor.grayColor().CGColor
+        border_three.backgroundColor = UIColor.grayColor()
+        let borderHeight_three = NSLayoutConstraint(
+            item: border_three,
+            attribute: NSLayoutAttribute.Height,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: stack,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 0.0,
+            constant: 1)
+        stack.addArrangedSubview(border_three)
+        stack.addConstraint(borderHeight_three)
+        
+        let row_four = UIStackView()
+        let nameLabel_six = UILabel()
+        nameLabel_six.text = "Pushups"
+        row_four.addArrangedSubview(nameLabel_six)
+        pushupLabel = UILabel()
+        pushupLabel.text = "-"
+        pushupLabel.textAlignment = NSTextAlignment.Right
+        pushupLabel.textColor = UIColor.grayColor()
+        row_four.addArrangedSubview(pushupLabel)
+        stack.addArrangedSubview(row_four)
+        
+        let border_four = UIView()
+        border_four.layer.backgroundColor = UIColor.grayColor().CGColor
+        border_four.backgroundColor = UIColor.grayColor()
+        let borderHeight_four = NSLayoutConstraint(
+            item: border_four,
+            attribute: NSLayoutAttribute.Height,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: stack,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 0.0,
+            constant: 1)
+        stack.addArrangedSubview(border_four)
+        stack.addConstraint(borderHeight_four)
+        
+        let row_five = UIStackView()
+        let nameLabel_seven = UILabel()
+        nameLabel_seven.text = "Situps"
+        row_five.addArrangedSubview(nameLabel_seven)
+        situpLabel = UILabel()
+        situpLabel.text = "-"
+        situpLabel.textAlignment = NSTextAlignment.Right
+        situpLabel.textColor = UIColor.grayColor()
+        row_five.addArrangedSubview(situpLabel)
+        stack.addArrangedSubview(row_five)
+        
+        let border_five = UIView()
+        border_five.layer.backgroundColor = UIColor.grayColor().CGColor
+        border_five.backgroundColor = UIColor.grayColor()
+        let borderHeight_five = NSLayoutConstraint(
+            item: border_five,
+            attribute: NSLayoutAttribute.Height,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: stack,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 0.0,
+            constant: 1)
+        stack.addArrangedSubview(border_five)
+        stack.addConstraint(borderHeight_five)
+        
+        let row_six = UIStackView()
+        let nameLabel_eight = UILabel()
+        nameLabel_eight.text = "Run"
+        row_six.addArrangedSubview(nameLabel_eight)
+        runLabel = UILabel()
+        runLabel.text = "-"
+        runLabel.textAlignment = NSTextAlignment.Right
+        runLabel.textColor = UIColor.grayColor()
+        row_six.addArrangedSubview(runLabel)
+        stack.addArrangedSubview(row_six)
+        
+        self.updateChanged()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print(self.view.frame)
+        self.scrollview.contentSize = CGSize(width: self.view.frame.width, height: stack.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height+40)
     }
 
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.dismissKeyboard()
+    }
+    func dismissKeyboard() {
+        print("dismissing keyboard")
+        self.resignFirstResponder()
+        self.view.endEditing(false)
+        updateChanged()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        var cell : UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "apft")
-        
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "segmented")
-                segment = UISegmentedControl(items: ["MALE", "FEMALE"]);
-                segment.frame = CGRectMake(5, 0, tableView.frame.width - 10 , cell.frame.height - 10)
-                segment.selectedSegmentIndex = 0
-                cell.addSubview(segment)
-                segment.addTarget(self, action: "updateChanged", forControlEvents: UIControlEvents.ValueChanged)
-                
-            } else if indexPath.row == 1 {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "age")
-                var nameLabel = UILabel(frame: CGRectMake(10, 0, 100, cell.frame.height))
-                nameLabel.text = "Age"
-                cell.addSubview(nameLabel)
-                
-                inputAge = UITextField(frame: CGRectMake(tableView.frame.width - cell.frame.width, 0, cell.frame.width - 10, cell.frame.height))
-                inputAge.keyboardType = UIKeyboardType.NumberPad
-                inputAge.placeholder = "21"
-                inputAge.textAlignment = NSTextAlignment.Right
-                cell.addSubview(inputAge)
-                inputAge.addTarget(self, action: "updateChanged", forControlEvents: UIControlEvents.EditingChanged)
-                
-
-            } else if indexPath.row == 2 {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "picker")
-            
-                pushupPicker = UIPickerView(frame: CGRectMake(0+10 ,0, cell.frame.width/3, cell.frame.height))
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "age")
-                pushupPicker.delegate = self
-                pushupPicker.dataSource = self
-                //pushupPicker.selectRow(30, inComponent: 0, animated: false)
-                cell.addSubview(pushupPicker)
-                var pushupLabel = UILabel(frame: CGRectMake(0+10 ,0, cell.frame.width/3, cell.frame.height))
-                pushupLabel.text = "Pushups"
-                pushupLabel.textAlignment = NSTextAlignment.Center
-                cell.addSubview(pushupLabel)
-                
-                 situpPicker = UIPickerView(frame: CGRectMake(tableView.frame.width/3 + 10,0, cell.frame.width/3, cell.frame.height))
-                situpPicker.delegate = self
-                situpPicker.dataSource = self
-                //situpPicker.selectRow(30, inComponent: 0, animated: false)
-                cell.addSubview(situpPicker)
-                var situpLabel = UILabel(frame: CGRectMake(tableView.frame.width/3 + 10,0, cell.frame.width/3, cell.frame.height))
-                situpLabel.text = "Situps"
-                situpLabel.textAlignment = NSTextAlignment.Center
-                cell.addSubview(situpLabel)
-                
-                runPicker = UIPickerView(frame: CGRectMake((tableView.frame.width/3)*2 + 10,0, cell.frame.width/3 , cell.frame.height))
-                runPicker.delegate = self
-                runPicker.dataSource = self
-                //runPicker.selectRow(30, inComponent: 0, animated: false)
-                cell.addSubview(runPicker)
-                var runLabel = UILabel(frame: CGRectMake((tableView.frame.width/3)*2 + 10,0, cell.frame.width/3 , cell.frame.height))
-                runLabel.text = "Run"
-                runLabel.textAlignment = NSTextAlignment.Center
-                cell.addSubview(runLabel)
-                
-                
-            } else {
-                var nameLabel = UILabel(frame: CGRectMake(10, 0, 100, cell.frame.height))
-                nameLabel.text = "Total Score"
-                cell.addSubview(nameLabel)
-                
-                valueLabel = UILabel(frame: CGRectMake(0, 0, cell.frame.width-15, cell.frame.height))
-                valueLabel.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin
-                valueLabel.text = "180"
-                valueLabel.textAlignment = NSTextAlignment.Right
-                valueLabel.textColor = UIColor.grayColor()
-                cell.addSubview(valueLabel)
-            }
-        } else if indexPath.section == 1 {
-            
-            
-            var nameLabel = UILabel(frame: CGRectMake(10, 0, 100, cell.frame.height))
-            switch indexPath.row {
-            case 0: nameLabel.text = "Pushups"
-            case 1: nameLabel.text = "Situps"
-            default: nameLabel.text = "Run"
-            }
-            cell.addSubview(nameLabel)
-            
-            
-            switch indexPath.row {
-            case 0:
-                pushupLabel = UILabel(frame: CGRectMake(0, 0, cell.frame.width-15, cell.frame.height))
-                pushupLabel.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin
-                pushupLabel.text = "-"
-                pushupLabel.textAlignment = NSTextAlignment.Right
-                pushupLabel.textColor = UIColor.grayColor()
-                cell.addSubview(pushupLabel)
-                pushupPicker.selectRow(30, inComponent: 0, animated: true)
-                self.pickerView(pushupPicker, didSelectRow: 30, inComponent: 0)
-            case 1:
-                situpLabel = UILabel(frame: CGRectMake(0, 0, cell.frame.width-15, cell.frame.height))
-                situpLabel.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin
-                situpLabel.text = "-"
-                situpLabel.textAlignment = NSTextAlignment.Right
-                situpLabel.textColor = UIColor.grayColor()
-                cell.addSubview(situpLabel)
-                situpPicker.selectRow(30, inComponent: 0, animated: true)
-                self.pickerView(situpPicker, didSelectRow: 30, inComponent: 0)
-            default:
-                runLabel = UILabel(frame: CGRectMake(0, 0, cell.frame.width-15, cell.frame.height))
-                runLabel.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin
-                runLabel.text = "-"
-                runLabel.textAlignment = NSTextAlignment.Right
-                runLabel.textColor = UIColor.grayColor()
-                cell.addSubview(runLabel)
-                runPicker.selectRow(30, inComponent: 0, animated: true)
-                self.pickerView(runPicker, didSelectRow: 30, inComponent: 0)
-            }
-            
-        }
-        
-        
-        
-        return cell
-    }
-    
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
-        //super.scrollViewDidScroll(scrollView)
-        self.view.endEditing(true)
-    }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 2 {
-            return 162
-        }
-        return tableView.rowHeight
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 4
-        }
-        return 3
-    }
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
-        
-        // gender, age, total, pushup, situp, run, results
-    }
-    
     func updateChanged() {
-        println("logged")
         self.pickerView(pushupPicker, didSelectRow: pushupPicker.selectedRowInComponent(0), inComponent: 0)
         self.pickerView(situpPicker, didSelectRow: situpPicker.selectedRowInComponent(0), inComponent: 0)
         self.pickerView(runPicker, didSelectRow: runPicker.selectedRowInComponent(0), inComponent: 0)
@@ -603,30 +763,50 @@ class ViewController: UITableViewController, UITableViewDataSource, UITableViewD
             return 71
     }
 
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return String(row + 30)
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let newValue : Int = row + 30;
-        println("value selected = \(newValue)")
+        print("value selected = \(newValue)")
         let sum = runPicker.selectedRowInComponent(0) + pushupPicker.selectedRowInComponent(0) + situpPicker.selectedRowInComponent(0) + 90
-        println("new sum = \(sum)")
+        print("new sum = \(sum)")
         valueLabel.text = String(sum)
         
-        let gender : NSString! = segment.titleForSegmentAtIndex(segment.selectedSegmentIndex)
+        switch pickerView {
+        case pushupPicker:
+             prefs.setInteger(row, forKey: "pushups")
+            break
+        case situpPicker:
+            prefs.setInteger(row, forKey: "situps")
+            break
+        case runPicker:
+            prefs.setInteger(row, forKey: "run")
+            break
+        default:
+            break
+        }
         
-        println("gender = \(gender)")
+        let gender : NSString! = segment.titleForSegmentAtIndex(segment.selectedSegmentIndex)
+        prefs.setInteger(segment.selectedSegmentIndex, forKey: "gender")
+        
+        print("gender = \(gender)")
         
         //println(inputAge.text)
-        var age : Int! = inputAge.text.toInt()
+        var age : Int! = Int(inputAge.text!)
         if (age == nil) {
             age = 21
+            inputAge.text = "" //placeholder is 21
         }
-        println("age = \(age)")
+        prefs.setInteger(age, forKey: "age")
+        print("age = \(age)")
+        
+        
+       
         
         switch pickerView {
-        case runPicker: println("Changing run value")
+        case runPicker: print("Changing run value")
             if(gender.isEqualToString("MALE")) {
                 if(age < 22) {
                     runLabel.text = String(maleRun21[row])
@@ -672,7 +852,7 @@ class ViewController: UITableViewController, UITableViewDataSource, UITableViewD
                     runLabel.text = String(femaleRun[row])
                 }
             }
-        case situpPicker: println("Changing situp value")
+        case situpPicker: print("Changing situp value")
             if(gender.isEqualToString("MALE")) {
                 if(age < 22) {
                     situpLabel.text = String(maleSitup21[row])
@@ -718,7 +898,7 @@ class ViewController: UITableViewController, UITableViewDataSource, UITableViewD
                     situpLabel.text = String(femaleSitup[row])
                 }
             }
-        default: println("Changing pushup value")
+        default: print("Changing pushup value")
             if(gender.isEqualToString("MALE")) {
                 if(age < 22) {
                     pushupLabel.text = String(malePushup21[row])

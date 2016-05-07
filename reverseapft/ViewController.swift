@@ -519,9 +519,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         inputAge.textAlignment = NSTextAlignment.Right
         inputAge.addTarget(self, action: #selector(ViewController.updateChanged), forControlEvents: UIControlEvents.EditingChanged)
         // you have to set the frame size otherwise the buttons will not work
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
         let helperBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
         let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: #selector(ViewController.dismissKeyboard))
-        helperBar.setItems([doneButton], animated: true)
+        helperBar.setItems([flexibleSpace, doneButton], animated: true)
         inputAge.inputAccessoryView = helperBar
         row_one.addArrangedSubview(inputAge)
         let inputCon = NSLayoutConstraint(

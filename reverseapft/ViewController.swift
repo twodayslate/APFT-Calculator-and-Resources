@@ -27,7 +27,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		// hide status bar
+		// show/hide status bar
 		// https://stackoverflow.com/questions/46543470/hide-status-bar-swift-4
 		let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
 		statusBar.isHidden = false
@@ -334,7 +334,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print(self.view.frame)
+        printd("self.view.frame", self.view.frame)
 		self.scrollview.contentSize = CGSize(width: self.view.frame.width, height: stack.frame.height + UIApplication.shared.statusBarFrame.size.height+40)
     }
 
@@ -343,7 +343,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 	
 	@objc func dismissKeyboard() {
-        print("dismissing keyboard")
+        printd("dismissing keyboard")
         self.resignFirstResponder()
         self.view.endEditing(false)
         updateChanged()
@@ -374,9 +374,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let newValue : Int = row + 30;
-        print("value selected = \(newValue)")
+		let score = row + 30
+		printd("row = \(row); score = \(newValue)")
 		let sum = runPicker.selectedRow(inComponent: 0) + pushupPicker.selectedRow(inComponent: 0) + situpPicker.selectedRow(inComponent: 0) + 90
-        print("new sum = \(sum)")
+        printd("New sum = \(sum)")
         valueLabel.text = String(sum)
         
         switch pickerView {
@@ -393,162 +394,30 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             break
         }
 		
-		let gender : NSString! = segment.titleForSegment(at: segment.selectedSegmentIndex)! as NSString
 		prefs.set(segment.selectedSegmentIndex, forKey: "gender")
-        
-        print("gender = \(gender)")
-        
-        //println(inputAge.text)
-        var age : Int! = Int(inputAge.text!)
-        if (age == nil) {
-            age = 21
-            inputAge.text = "" //placeholder is 21
-        }
+		Score.gender = Gender(rawValue: segment.selectedSegmentIndex)!
+        printd("gender = \(Score.gender)")
+		
+		let age : Int = Int(inputAge.text ?? "21") ?? 21
+		if age == 21 {
+			inputAge.text = "" //placeholder is 21
+		}
 		prefs.set(age, forKey: "age")
-        print("age = \(age)")
-        
-        
-       
-        
+		Score.age = age
+        printd("age = \(Score.age)")
+		
         switch pickerView {
-        case runPicker: print("Changing run value")
-		if(gender.isEqual(to: "MALE")) {
-                if(age < 22) {
-                    runLabel.text = String(maleRun21[row])
-                } else if(age < 27) {
-                    runLabel.text = String(maleRun26[row])
-                } else if(age < 32) {
-                    runLabel.text = String(maleRun31[row])
-                } else if(age < 37) {
-                    runLabel.text = String(maleRun36[row])
-                } else if(age < 42) {
-                    runLabel.text = String(maleRun41[row])
-                } else if(age < 47) {
-                    runLabel.text = String(maleRun46[row])
-                } else if(age < 52) {
-                    runLabel.text = String(maleRun51[row])
-                } else if(age < 57) {
-                    runLabel.text = String(maleRun56[row])
-                } else if(age < 62) {
-                    runLabel.text = String(maleRun61[row])
-                } else {
-                    runLabel.text = String(maleRun[row])
-                }
-            } else  { // is FEMALE
-                if(age < 22) {
-                    runLabel.text = String(femaleRun21[row])
-                } else if(age < 27) {
-                    runLabel.text = String(femaleRun26[row])
-                } else if(age < 32) {
-                    runLabel.text = String(femaleRun31[row])
-                } else if(age < 37) {
-                    runLabel.text = String(femaleRun36[row])
-                } else if(age < 42) {
-                    runLabel.text = String(femaleRun41[row])
-                } else if(age < 47) {
-                    runLabel.text = String(femaleRun46[row])
-                } else if(age < 52) {
-                    runLabel.text = String(femaleRun51[row])
-                } else if(age < 57) {
-                    runLabel.text = String(femaleRun56[row])
-                } else if(age < 62) {
-                    runLabel.text = String(femaleRun61[row])
-                } else {
-                    runLabel.text = String(femaleRun[row])
-                }
-            }
-        case situpPicker: print("Changing situp value")
-		if(gender.isEqual(to: "MALE")) {
-                if(age < 22) {
-                    situpLabel.text = String(maleSitup21[row])
-                } else if(age < 27) {
-                    situpLabel.text = String(maleSitup26[row])
-                } else if(age < 32) {
-                    situpLabel.text = String(maleSitup31[row])
-                } else if(age < 37) {
-                    situpLabel.text = String(maleSitup36[row])
-                } else if(age < 42) {
-                    situpLabel.text = String(maleSitup41[row])
-                } else if(age < 47) {
-                    situpLabel.text = String(maleSitup46[row])
-                } else if(age < 52) {
-                    situpLabel.text = String(maleSitup51[row])
-                } else if(age < 57) {
-                    situpLabel.text = String(maleSitup56[row])
-                } else if(age < 62) {
-                    situpLabel.text = String(maleSitup61[row])
-                } else {
-                    situpLabel.text = String(maleSitup[row])
-                }
-            } else  { // is FEMALE
-                if(age < 22) {
-                    situpLabel.text = String(femaleSitup21[row])
-                } else if(age < 27) {
-                    situpLabel.text = String(femaleSitup26[row])
-                } else if(age < 32) {
-                    situpLabel.text = String(femaleSitup31[row])
-                } else if(age < 37) {
-                    situpLabel.text = String(femaleSitup36[row])
-                } else if(age < 42) {
-                    situpLabel.text = String(femaleSitup41[row])
-                } else if(age < 47) {
-                    situpLabel.text = String(femaleSitup46[row])
-                } else if(age < 52) {
-                    situpLabel.text = String(femaleSitup51[row])
-                } else if(age < 57) {
-                    situpLabel.text = String(femaleSitup56[row])
-                } else if(age < 62) {
-                    situpLabel.text = String(femaleSitup61[row])
-                } else {
-                    situpLabel.text = String(femaleSitup[row])
-                }
-            }
-        default: print("Changing pushup value")
-		if(gender.isEqual(to: "MALE")) {
-                if(age < 22) {
-                    pushupLabel.text = String(malePushup21[row])
-                } else if(age < 27) {
-                    pushupLabel.text = String(malePushup26[row])
-                } else if(age < 32) {
-                    pushupLabel.text = String(malePushup31[row])
-                } else if(age < 37) {
-                    pushupLabel.text = String(malePushup36[row])
-                } else if(age < 42) {
-                    pushupLabel.text = String(malePushup41[row])
-                } else if(age < 47) {
-                    pushupLabel.text = String(malePushup46[row])
-                } else if(age < 52) {
-                    pushupLabel.text = String(malePushup51[row])
-                } else if(age < 57) {
-                    pushupLabel.text = String(malePushup56[row])
-                } else if(age < 62) {
-                    pushupLabel.text = String(malePushup61[row])
-                } else {
-                    pushupLabel.text = String(malePushup[row])
-                }
-            } else  { // is FEMALE
-                if(age < 22) {
-                    pushupLabel.text = String(femalePushup21[row])
-                } else if(age < 27) {
-                    pushupLabel.text = String(femalePushup26[row])
-                } else if(age < 32) {
-                    pushupLabel.text = String(femalePushup31[row])
-                } else if(age < 37) {
-                    pushupLabel.text = String(femalePushup36[row])
-                } else if(age < 42) {
-                    pushupLabel.text = String(femalePushup41[row])
-                } else if(age < 47) {
-                    pushupLabel.text = String(femalePushup46[row])
-                } else if(age < 52) {
-                    pushupLabel.text = String(femalePushup51[row])
-                } else if(age < 57) {
-                    pushupLabel.text = String(femalePushup56[row])
-                } else if(age < 62) {
-                    pushupLabel.text = String(femalePushup61[row])
-                } else {
-                    pushupLabel.text = String(femalePushup[row])
-                }
-            }
+        case runPicker: printd("Changing run value")
+			runLabel.text = String(Score.run(forScore: score))
+			let index = runLabel.text?.index((runLabel.text?.startIndex)!, offsetBy: 2)
+			runLabel.text?.insert(":", at: index!)
+			break
+        case situpPicker: printd("Changing situp value")
+			situpLabel.text = String(Score.situp(forScore: score))
+			break
+        default: printd("Changing pushup value")
+			pushupLabel.text = String(Score.pushups(forScore: score))
+			break
         }
     }
 }

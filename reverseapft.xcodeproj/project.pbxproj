@@ -13,6 +13,7 @@
 		118BF03219EDF13E00B66C26 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 118BF03019EDF13E00B66C26 /* LaunchScreen.xib */; };
 		118BF03E19EDF13E00B66C26 /* reverseapftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF03D19EDF13E00B66C26 /* reverseapftTests.swift */; };
 		F6957DFD203B6189003FFE3E /* Scores.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFC203B6189003FFE3E /* Scores.swift */; };
+		F6957DFF203D047E003FFE3E /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFE203D047E003FFE3E /* Globals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		118BF03C19EDF13E00B66C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		118BF03D19EDF13E00B66C26 /* reverseapftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reverseapftTests.swift; sourceTree = "<group>"; };
 		F6957DFC203B6189003FFE3E /* Scores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scores.swift; sourceTree = "<group>"; };
+		F6957DFE203D047E003FFE3E /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				118BF02719EDF13E00B66C26 /* AppDelegate.swift */,
+				F6957DFE203D047E003FFE3E /* Globals.swift */,
 				118BF02919EDF13E00B66C26 /* ViewController.swift */,
 				F6957DFC203B6189003FFE3E /* Scores.swift */,
 				118BF02E19EDF13E00B66C26 /* Images.xcassets */,
@@ -214,6 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6957DFF203D047E003FFE3E /* Globals.swift in Sources */,
 				118BF02A19EDF13E00B66C26 /* ViewController.swift in Sources */,
 				F6957DFD203B6189003FFE3E /* Scores.swift in Sources */,
 				118BF02819EDF13E00B66C26 /* AppDelegate.swift in Sources */,

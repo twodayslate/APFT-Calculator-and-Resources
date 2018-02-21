@@ -8,6 +8,179 @@
 
 import Foundation
 
+enum Gender : Int, CustomStringConvertible {
+	case male
+	case female
+	
+	static func from(value: String) -> Gender {
+		if value.lowercased() == "female" {
+			return .female
+		}
+		return .male
+	}
+	
+	var description: String {
+		get {
+			switch self {
+				case .female: return "FEMALE"
+				case .male: return "MALE"
+			}
+		}
+	}
+}
+
+class Score {
+	static var gender: Gender = .male
+	static var age: Int = 22
+	
+	static func run(forScore score: Int) -> Int {
+		let row = score-30
+		if gender == .male {
+			if(age < 22) {
+				return maleRun21[row]
+			} else if(age < 27) {
+				return maleRun26[row]
+			} else if(age < 32) {
+				return maleRun31[row]
+			} else if(age < 37) {
+				return maleRun36[row]
+			} else if(age < 42) {
+				return maleRun41[row]
+			} else if(age < 47) {
+				return maleRun46[row]
+			} else if(age < 52) {
+				return maleRun51[row]
+			} else if(age < 57) {
+				return maleRun56[row]
+			} else if(age < 62) {
+				return maleRun61[row]
+			} else {
+				return maleRun[row]
+			}
+		} else {
+			if(age < 22) {
+				return femaleRun21[row]
+			} else if(age < 27) {
+				return femaleRun26[row]
+			} else if(age < 32) {
+				return femaleRun31[row]
+			} else if(age < 37) {
+				return femaleRun36[row]
+			} else if(age < 42) {
+				return femaleRun41[row]
+			} else if(age < 47) {
+				return femaleRun46[row]
+			} else if(age < 52) {
+				return femaleRun51[row]
+			} else if(age < 57) {
+				return femaleRun56[row]
+			} else if(age < 62) {
+				return femaleRun61[row]
+			} else {
+				return femaleRun[row]
+			}
+		}
+	}
+	
+	static func situp(forScore score: Int) -> Int {
+		let row = score-30
+		if(gender == .male) {
+			if(age < 22) {
+				return maleSitup21[row]
+			} else if(age < 27) {
+				return maleSitup26[row]
+			} else if(age < 32) {
+				return maleSitup31[row]
+			} else if(age < 37) {
+				return maleSitup36[row]
+			} else if(age < 42) {
+				return maleSitup41[row]
+			} else if(age < 47) {
+				return maleSitup46[row]
+			} else if(age < 52) {
+				return maleSitup51[row]
+			} else if(age < 57) {
+				return maleSitup56[row]
+			} else if(age < 62) {
+				return maleSitup61[row]
+			} else {
+				return maleSitup[row]
+			}
+		} else  { // is FEMALE
+			if(age < 22) {
+				return femaleSitup21[row]
+			} else if(age < 27) {
+				return femaleSitup26[row]
+			} else if(age < 32) {
+				return femaleSitup31[row]
+			} else if(age < 37) {
+				return femaleSitup36[row]
+			} else if(age < 42) {
+				return femaleSitup41[row]
+			} else if(age < 47) {
+				return femaleSitup46[row]
+			} else if(age < 52) {
+				return femaleSitup51[row]
+			} else if(age < 57) {
+				return femaleSitup56[row]
+			} else if(age < 62) {
+				return femaleSitup61[row]
+			} else {
+				return femaleSitup[row]
+			}
+		}
+	}
+	
+	static func pushups(forScore score: Int) -> Int {
+		let row = score-30
+		if(gender == .male) {
+			if(age < 22) {
+				return malePushup21[row]
+			} else if(age < 27) {
+				return malePushup26[row]
+			} else if(age < 32) {
+				return malePushup31[row]
+			} else if(age < 37) {
+				return malePushup36[row]
+			} else if(age < 42) {
+				return malePushup41[row]
+			} else if(age < 47) {
+				return malePushup46[row]
+			} else if(age < 52) {
+				return malePushup51[row]
+			} else if(age < 57) {
+				return malePushup56[row]
+			} else if(age < 62) {
+				return malePushup61[row]
+			} else {
+				return malePushup[row]
+			}
+		} else  { // is FEMALE
+			if(age < 22) {
+				return femalePushup21[row]
+			} else if(age < 27) {
+				return femalePushup26[row]
+			} else if(age < 32) {
+				return femalePushup31[row]
+			} else if(age < 37) {
+				return femalePushup36[row]
+			} else if(age < 42) {
+				return femalePushup41[row]
+			} else if(age < 47) {
+				return femalePushup46[row]
+			} else if(age < 52) {
+				return femalePushup51[row]
+			} else if(age < 57) {
+				return femalePushup56[row]
+			} else if(age < 62) {
+				return femalePushup61[row]
+			} else {
+				return femalePushup[row]
+			}
+		}
+	}
+}
+
 // This is the score 30-100
 //[30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,
 // 45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,

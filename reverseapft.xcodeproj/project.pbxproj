@@ -11,9 +11,13 @@
 		118BF02A19EDF13E00B66C26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF02919EDF13E00B66C26 /* ViewController.swift */; };
 		118BF02F19EDF13E00B66C26 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 118BF02E19EDF13E00B66C26 /* Images.xcassets */; };
 		118BF03219EDF13E00B66C26 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 118BF03019EDF13E00B66C26 /* LaunchScreen.xib */; };
-		118BF03E19EDF13E00B66C26 /* reverseapftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF03D19EDF13E00B66C26 /* reverseapftTests.swift */; };
+		118BF03E19EDF13E00B66C26 /* runTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF03D19EDF13E00B66C26 /* runTests.swift */; };
+		F6632C54204A09FC00B73607 /* PushupTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6632C52204A09FC00B73607 /* PushupTest.swift */; };
+		F6632C55204A09FC00B73607 /* SitupTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6632C53204A09FC00B73607 /* SitupTest.swift */; };
 		F6957DFD203B6189003FFE3E /* Scores.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFC203B6189003FFE3E /* Scores.swift */; };
 		F6957DFF203D047E003FFE3E /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFE203D047E003FFE3E /* Globals.swift */; };
+		F6957E01203E6961003FFE3E /* Scores.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFC203B6189003FFE3E /* Scores.swift */; };
+		F6957E02203E69CB003FFE3E /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFE203D047E003FFE3E /* Globals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +39,9 @@
 		118BF03119EDF13E00B66C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		118BF03719EDF13E00B66C26 /* reverseapftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = reverseapftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		118BF03C19EDF13E00B66C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		118BF03D19EDF13E00B66C26 /* reverseapftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reverseapftTests.swift; sourceTree = "<group>"; };
+		118BF03D19EDF13E00B66C26 /* runTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = runTests.swift; sourceTree = "<group>"; };
+		F6632C52204A09FC00B73607 /* PushupTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushupTest.swift; sourceTree = "<group>"; };
+		F6632C53204A09FC00B73607 /* SitupTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SitupTest.swift; sourceTree = "<group>"; };
 		F6957DFC203B6189003FFE3E /* Scores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scores.swift; sourceTree = "<group>"; };
 		F6957DFE203D047E003FFE3E /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,7 +107,9 @@
 		118BF03A19EDF13E00B66C26 /* reverseapftTests */ = {
 			isa = PBXGroup;
 			children = (
-				118BF03D19EDF13E00B66C26 /* reverseapftTests.swift */,
+				118BF03D19EDF13E00B66C26 /* runTests.swift */,
+				F6632C52204A09FC00B73607 /* PushupTest.swift */,
+				F6632C53204A09FC00B73607 /* SitupTest.swift */,
 				118BF03B19EDF13E00B66C26 /* Supporting Files */,
 			);
 			path = reverseapftTests;
@@ -228,7 +236,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				118BF03E19EDF13E00B66C26 /* reverseapftTests.swift in Sources */,
+				F6632C54204A09FC00B73607 /* PushupTest.swift in Sources */,
+				F6632C55204A09FC00B73607 /* SitupTest.swift in Sources */,
+				F6957E01203E6961003FFE3E /* Scores.swift in Sources */,
+				118BF03E19EDF13E00B66C26 /* runTests.swift in Sources */,
+				F6957E02203E69CB003FFE3E /* Globals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

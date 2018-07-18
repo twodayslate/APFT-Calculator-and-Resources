@@ -413,7 +413,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 			runLabel.text?.insert(":", at: index!)
 			break
         case situpPicker: printd("Changing situp value")
-			situpLabel.text = String(Score.situp(forScore: score))
+			situpLabel.text = String(Score.situps(forScore: score))
 			break
         default: printd("Changing pushup value")
 			pushupLabel.text = String(Score.pushups(forScore: score))

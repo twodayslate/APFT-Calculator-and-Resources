@@ -24,16 +24,16 @@ class runTests: XCTestCase {
 	func testScore() {
 		Score.age = 21
 		Score.gender = .male
-		XCTAssert(Score.score(forRun: 1200) == 100)
-		XCTAssert(Score.score(forRun: 1299) == 100)
-		XCTAssert(Score.score(forRun: 1300) == 100)
-		XCTAssert(Score.score(forRun: 1301) == 99)
-		XCTAssert(Score.score(forRun: 1306) == 99)
-		XCTAssert(Score.score(forRun: 1307) == 97)
-		XCTAssert(Score.score(forRun: 1312) == 97)
-		XCTAssert(Score.score(forRun: 1400) == 86)
-		XCTAssert(Score.score(forRun: 1500) == 72)
-		XCTAssert(Score.score(forRun: 1806) == 30)
-		XCTAssert(Score.score(forRun: 1800) == 31)
+        XCTAssertEqual(Score.score(forRun: 1200), 100)
+		XCTAssertEqual(Score.score(forRun: 1299), 100)
+		XCTAssertEqual(Score.score(forRun: 1300), 100)
+		XCTAssertEqual(Score.score(forRun: 1301), 99)
+		XCTAssertEqual(Score.score(forRun: 1306), 99)
+		XCTAssertEqual(Score.score(forRun: 1307), 97)
+		XCTAssertEqual(Score.score(forRun: 1312), 97)
+		XCTAssertEqual(Score.score(forRun: 1400), 86)
+		XCTAssertEqual(Score.score(forRun: 1500), 72)
+		XCTAssertEqual(Score.score(forRun: 1806), 30)
+		XCTAssertEqual(Score.score(forRun: 1800), 31)
 	}
 }

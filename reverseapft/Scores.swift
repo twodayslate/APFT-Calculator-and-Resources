@@ -37,10 +37,10 @@ class Score {
 		
 	}
 	
-	public init(age: Int, gender: Gender) {
-		self.gender = gender
-		self.age = age
+    public convenience init(age: Int, gender: Gender) {
 		self.init()
+        self.gender = gender
+        self.age = age
 	}
 	
 	static var gender: Gender = .male
@@ -439,34 +439,39 @@ class Score {
 	
 	/// returns the number of pushups required for a given score
 	static func runTime(forScore score : Int) -> Int {
-		let rar = Score.situps[Score.index(forAge: Score.age)]
+		let rar = Score.run[self.gender.rawValue][Score.index(forAge: Score.age)]
+        let timeRar = Score.gender == .male ? Score.maleRunCount : Score.femaleRunCount
 		if score <= 0 { return 0 }
 		for (i, val) in rar.enumerated() {
 			if val >= score {
-				return Score.situpCount[i]
+                return timeRar[i]
 			}
 		}
-		return Score.situpCount[rar.count]
+		return timeRar[timeRar.count]
 	}
 	
 	/// returns the score for the given number of pushups
 	public static func score(forRun time: Int) -> Int {
-		let ageRar = Score.situps[Score.index(forAge: Score.age)]
-		var index = Score.index(forRun: time)
-		if index > ageRar.count-1 {
-			index = ageRar.count-1
-		}
-		//print("scoreForPushups", pushups, Score.index(forPushups: pushups), ageRar, ageRar.count, index)
-		return ageRar[index]
+        print("getting score for: ", time)
+        let rar = Score.run[self.gender.rawValue][Score.index(forAge: Score.age)]
+		let index = min(Score.index(forRun: time), rar.count-1)
+        print(rar, index, rar.count)
+		return rar[index]
 	}
 	
 	private static func index(forRun time: Int) -> Int {
-		var rar = Score.gender == .male ? Score.maleRunCount : Score.femaleRunCount
+		let rar = Score.gender == .male ? Score.maleRunCount : Score.femaleRunCount
+        print(rar)
 		for (i, val) in rar.enumerated() {
-			if time <= val {
+			if time == val {
+                print(time, ">=", val, ": ", i)
 				return i
 			}
+            if time > val {
+                return i-1
+            }
 		}
+        print("never greater")
 		return rar.count-1
 	}
 	
@@ -488,7 +493,12 @@ class Score {
 	private static let femaleRunCount = [
 				2042, 2036, 2030, 2024, 2018, 2012, 2006,
 				2000, 1954, 1948, 1942, 1936, 1930, 1924,
-				1918, 1912, 1906, 1900, 1854, 1848, 1842, 1836, 1830, 1824, 1818, 1812, 1806, 1800, 1754, 1748, 1742, 1736, 1730, 1724, 1718, 1712, 1706, 1700, 1654, 1648, 1642, 1636, 1630, 1624, 1618, 1612, 1606, 1600, 1554, 1548, 1542, 1536, 1530
+				1918, 1912, 1906, 1900, 1854, 1848, 1842,
+                1836, 1830, 1824, 1818, 1812, 1806, 1800,
+                1754, 1748, 1742, 1736, 1730, 1724, 1718,
+                1712, 1706, 1700, 1654, 1648, 1642, 1636,
+                1630, 1624, 1618, 1612, 1606, 1600, 1554,
+                1548, 1542, 1536, 1530
 	]
 	
 	private static let run = [
@@ -496,6 +506,7 @@ class Score {
 			[
 			//  2042, 2036, 2030, 2024, 2018, 2012, 2006,
 				0000, 0000, 0000, 0000, 0000, 0001, 0002,
+            //  2000, 1954, 1948, 1942, 1936, 1930, 1924,
 				0003, 0005, 0006, 0008, 0009, 0010, 0012,
 				0013, 0014, 0017, 0018, 0019, 0020, 0021,
 				0023, 0024, 0026, 0027, 0028, 0030, 0031,
@@ -505,6 +516,7 @@ class Score {
 				0061, 0063, 0064, 0066, 0067, 0068, 0070,
 				0071, 0072, 0074, 0075, 0077, 0078, 0079,
 				0081, 0082, 0083, 0085, 0086, 0088, 0089,
+            //  1342, 1336, 1330, 1324, 1318, 1312, 1306,
 				0090, 0092, 0093, 0094, 0096, 0097, 0099,
 				0100
 			],

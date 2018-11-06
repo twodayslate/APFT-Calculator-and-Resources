@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate {
+class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate {
 
     var situpPicker : UIPickerView! = nil
     var pushupPicker : UIPickerView! = nil
@@ -37,47 +37,47 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         scrollview.translatesAutoresizingMaskIntoConstraints = false
         scrollview.delegate = self
         self.view.addSubview(scrollview)
-		self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollview]|", options: .alignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
-		self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollview]|", options: .alignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
+		self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[scrollview]-|", options: .alignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
+		self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[scrollview]-|", options: .alignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
         
         stack = UIStackView()
-		stack.axis = UILayoutConstraintAxis.vertical
+		stack.axis = NSLayoutConstraint.Axis.vertical
         //stack.alignment = UIStackViewAlignment.Fill
         //stack.distribution = UIStackViewDistribution.FillProportionally
         stack.spacing = 10
         stack.translatesAutoresizingMaskIntoConstraints = false
         let topConstraint = NSLayoutConstraint(
             item: stack,
-			attribute: NSLayoutAttribute.topMargin,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.topMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: scrollview,
-			attribute: NSLayoutAttribute.topMargin,
+			attribute: NSLayoutConstraint.Attribute.topMargin,
             multiplier: 1.0,
-			constant: UIApplication.shared.statusBarFrame.size.height + 10)
+			constant: 0)
         let leftConstraint = NSLayoutConstraint(
             item: stack,
-			attribute: NSLayoutAttribute.leading,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.leading,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: scrollview,
-			attribute: NSLayoutAttribute.leading,
+			attribute: NSLayoutConstraint.Attribute.leading,
             multiplier: 1.0,
-            constant: 20)
+            constant: 0)
         let rightConstraint = NSLayoutConstraint(
             item: stack,
-			attribute: NSLayoutAttribute.trailing,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.trailing,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: scrollview,
-			attribute: NSLayoutAttribute.trailing,
+			attribute: NSLayoutConstraint.Attribute.trailing,
             multiplier: 1.0,
-            constant: 20)
+            constant: 0)
         let widthCon = NSLayoutConstraint(
             item: stack,
-			attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.width,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: scrollview,
-            attribute: NSLayoutAttribute.width,
+            attribute: NSLayoutConstraint.Attribute.width,
             multiplier: 1.0,
-            constant: -60)
+            constant: 0)
         scrollview.addSubview(stack)
         scrollview.addConstraint(widthCon)
         scrollview.addConstraint(topConstraint)
@@ -94,7 +94,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         segment = UISegmentedControl(items: ["MALE", "FEMALE"]);
         //TODO: get from previous run
 		segment.selectedSegmentIndex = prefs.integer(forKey: "gender")
-		segment.addTarget(self, action: #selector(ViewController.updateChanged), for: UIControlEvents.valueChanged)
+		segment.addTarget(self, action: #selector(ReverseCalcViewController.updateChanged), for: UIControl.Event.valueChanged)
         stack.addArrangedSubview(segment)
         
         let border_zero = UIView()
@@ -102,10 +102,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 		border_zero.backgroundColor = UIColor.gray
         let borderHeight_zero = NSLayoutConstraint(
             item: border_zero,
-			attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_zero)
@@ -121,20 +121,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         inputAge.placeholder = "21"
         
 		inputAge.textAlignment = NSTextAlignment.right
-		inputAge.addTarget(self, action: #selector(ViewController.updateChanged), for: UIControlEvents.editingChanged)
+		inputAge.addTarget(self, action: #selector(ReverseCalcViewController.updateChanged), for: UIControl.Event.editingChanged)
         // you have to set the frame size otherwise the buttons will not work
-		let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+		let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
         let helperBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
-		let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissKeyboard))
+		let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(self.dismissKeyboard))
         helperBar.setItems([flexibleSpace, doneButton], animated: true)
         inputAge.inputAccessoryView = helperBar
         row_one.addArrangedSubview(inputAge)
         let inputCon = NSLayoutConstraint(
             item: inputAge,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.lessThanOrEqual,
+            attribute: NSLayoutConstraint.Attribute.width,
+            relatedBy: NSLayoutConstraint.Relation.lessThanOrEqual,
             toItem: row_one,
-            attribute: NSLayoutAttribute.width,
+            attribute: NSLayoutConstraint.Attribute.width,
             multiplier: 1.0,
             constant: 0)
         row_one.addConstraint(inputCon)
@@ -147,10 +147,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 		border.isHidden = false
         let borderHeight = NSLayoutConstraint(
             item: border,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border)
@@ -159,7 +159,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         let row_two = UIStackView()
         let column_one = UIStackView()
-        column_one.axis = UILayoutConstraintAxis.vertical
+        column_one.axis = NSLayoutConstraint.Axis.vertical
         let nameLabel_two = UILabel()
         nameLabel_two.text = "Pushups"
         nameLabel_two.textAlignment = NSTextAlignment.center
@@ -173,16 +173,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         row_two.addArrangedSubview(column_one)
         let thirdWidthConstraint_one = NSLayoutConstraint(
             item: column_one,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.width,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: row_two,
-            attribute: NSLayoutAttribute.width,
+            attribute: NSLayoutConstraint.Attribute.width,
             multiplier: (1.0/3.0),
             constant: 0)
         row_two.addConstraint(thirdWidthConstraint_one)
         
         let column_two = UIStackView()
-        column_two.axis = UILayoutConstraintAxis.vertical
+        column_two.axis = NSLayoutConstraint.Axis.vertical
         let nameLabel_three = UILabel()
         nameLabel_three.text = "Situps"
         nameLabel_three.textAlignment = NSTextAlignment.center
@@ -196,16 +196,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 row_two.addArrangedSubview(column_two)
         let thirdWidthConstraint_two = NSLayoutConstraint(
             item: column_two,
-			attribute: NSLayoutAttribute.width,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.width,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: row_two,
-			attribute: NSLayoutAttribute.width,
+			attribute: NSLayoutConstraint.Attribute.width,
             multiplier: (1.0/3.0),
             constant: 0)
         row_two.addConstraint(thirdWidthConstraint_two)
         
         let column_three = UIStackView()
-        column_three.axis = UILayoutConstraintAxis.vertical
+        column_three.axis = NSLayoutConstraint.Axis.vertical
         let nameLabel_four = UILabel()
         nameLabel_four.text = "Run"
         nameLabel_four.textAlignment = NSTextAlignment.center
@@ -219,10 +219,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 row_two.addArrangedSubview(column_three)
         let thirdWidthConstraint_three = NSLayoutConstraint(
             item: column_three,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.width,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: row_two,
-            attribute: NSLayoutAttribute.width,
+            attribute: NSLayoutConstraint.Attribute.width,
             multiplier: (1.0/3.0),
             constant: 0)
         row_two.addConstraint(thirdWidthConstraint_three)
@@ -234,10 +234,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         border_two.backgroundColor = UIColor.gray
         let borderHeight_two = NSLayoutConstraint(
             item: border_two,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_two)
@@ -259,10 +259,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         border_three.backgroundColor = UIColor.gray
         let borderHeight_three = NSLayoutConstraint(
             item: border_three,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_three)
@@ -284,10 +284,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         border_four.backgroundColor = UIColor.gray
         let borderHeight_four = NSLayoutConstraint(
             item: border_four,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_four)
@@ -309,10 +309,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         border_five.backgroundColor = UIColor.gray
         let borderHeight_five = NSLayoutConstraint(
             item: border_five,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_five)
@@ -335,7 +335,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         printd("self.view.frame", self.view.frame)
-		self.scrollview.contentSize = CGSize(width: self.view.frame.width, height: stack.frame.height + UIApplication.shared.statusBarFrame.size.height+40)
+		self.scrollview.contentSize = CGSize(width: stack.frame.width, height: stack.frame.height + UIApplication.shared.statusBarFrame.size.height+40)
     }
 
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -407,15 +407,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         printd("age = \(Score.age)")
 		
         switch pickerView {
-        case runPicker: printd("Changing run value")
-			runLabel.text = String(Score.run(forScore: score))
+        case runPicker:
+            printd("Changing run value")
+			runLabel.text = String(Score.runTime(forScore: score))
 			let index = runLabel.text?.index((runLabel.text?.startIndex)!, offsetBy: 2)
 			runLabel.text?.insert(":", at: index!)
 			break
-        case situpPicker: printd("Changing situp value")
+        case situpPicker:
+            printd("Changing situp value")
 			situpLabel.text = String(Score.situps(forScore: score))
 			break
-        default: printd("Changing pushup value")
+        default:
+            printd("Changing pushup value")
 			pushupLabel.text = String(Score.pushups(forScore: score))
 			break
         }

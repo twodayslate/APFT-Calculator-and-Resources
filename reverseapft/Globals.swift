@@ -9,7 +9,7 @@
 import Foundation
 
 func printd(_ items: Any..., callingFunction : String = #function, file : String = #file, line : Int = #line) {
-	#if DEBUG
+	#if DEVELOP || DEBUG || !PRODCTN
 		let s = items.map { String(describing: $0) }.joined(separator: " ")
 		let shortfile = file.split(separator: ".").dropLast().last!
 		let shortfunction = callingFunction.split(separator: "(").first!

@@ -8,11 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		118BF02819EDF13E00B66C26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF02719EDF13E00B66C26 /* AppDelegate.swift */; };
-		118BF02A19EDF13E00B66C26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF02919EDF13E00B66C26 /* ViewController.swift */; };
+		118BF02A19EDF13E00B66C26 /* ReverseCalcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF02919EDF13E00B66C26 /* ReverseCalcViewController.swift */; };
 		118BF02F19EDF13E00B66C26 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 118BF02E19EDF13E00B66C26 /* Images.xcassets */; };
 		118BF03219EDF13E00B66C26 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 118BF03019EDF13E00B66C26 /* LaunchScreen.xib */; };
-		118BF03E19EDF13E00B66C26 /* reverseapftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF03D19EDF13E00B66C26 /* reverseapftTests.swift */; };
+		118BF03E19EDF13E00B66C26 /* runTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF03D19EDF13E00B66C26 /* runTests.swift */; };
+		F60A6AFD21924520009F073E /* SRCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60A6AFC21924520009F073E /* SRCTabBarController.swift */; };
+		F6632C54204A09FC00B73607 /* PushupTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6632C52204A09FC00B73607 /* PushupTest.swift */; };
+		F6632C55204A09FC00B73607 /* SitupTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6632C53204A09FC00B73607 /* SitupTest.swift */; };
 		F6957DFD203B6189003FFE3E /* Scores.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFC203B6189003FFE3E /* Scores.swift */; };
+		F6957DFF203D047E003FFE3E /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFE203D047E003FFE3E /* Globals.swift */; };
+		F6957E01203E6961003FFE3E /* Scores.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFC203B6189003FFE3E /* Scores.swift */; };
+		F6957E02203E69CB003FFE3E /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFE203D047E003FFE3E /* Globals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +35,17 @@
 		118BF02219EDF13E00B66C26 /* reverseapft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reverseapft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		118BF02619EDF13E00B66C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		118BF02719EDF13E00B66C26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		118BF02919EDF13E00B66C26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		118BF02919EDF13E00B66C26 /* ReverseCalcViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseCalcViewController.swift; sourceTree = "<group>"; };
 		118BF02E19EDF13E00B66C26 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		118BF03119EDF13E00B66C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		118BF03719EDF13E00B66C26 /* reverseapftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = reverseapftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		118BF03C19EDF13E00B66C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		118BF03D19EDF13E00B66C26 /* reverseapftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reverseapftTests.swift; sourceTree = "<group>"; };
+		118BF03D19EDF13E00B66C26 /* runTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = runTests.swift; sourceTree = "<group>"; };
+		F60A6AFC21924520009F073E /* SRCTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRCTabBarController.swift; sourceTree = "<group>"; };
+		F6632C52204A09FC00B73607 /* PushupTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushupTest.swift; sourceTree = "<group>"; };
+		F6632C53204A09FC00B73607 /* SitupTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SitupTest.swift; sourceTree = "<group>"; };
 		F6957DFC203B6189003FFE3E /* Scores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scores.swift; sourceTree = "<group>"; };
+		F6957DFE203D047E003FFE3E /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +88,9 @@
 			isa = PBXGroup;
 			children = (
 				118BF02719EDF13E00B66C26 /* AppDelegate.swift */,
-				118BF02919EDF13E00B66C26 /* ViewController.swift */,
+				F60A6AFC21924520009F073E /* SRCTabBarController.swift */,
+				F6957DFE203D047E003FFE3E /* Globals.swift */,
+				118BF02919EDF13E00B66C26 /* ReverseCalcViewController.swift */,
 				F6957DFC203B6189003FFE3E /* Scores.swift */,
 				118BF02E19EDF13E00B66C26 /* Images.xcassets */,
 				118BF03019EDF13E00B66C26 /* LaunchScreen.xib */,
@@ -98,7 +110,9 @@
 		118BF03A19EDF13E00B66C26 /* reverseapftTests */ = {
 			isa = PBXGroup;
 			children = (
-				118BF03D19EDF13E00B66C26 /* reverseapftTests.swift */,
+				118BF03D19EDF13E00B66C26 /* runTests.swift */,
+				F6632C52204A09FC00B73607 /* PushupTest.swift */,
+				F6632C53204A09FC00B73607 /* SitupTest.swift */,
 				118BF03B19EDF13E00B66C26 /* Supporting Files */,
 			);
 			path = reverseapftTests;
@@ -157,16 +171,18 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = twodayslate;
 				TargetAttributes = {
 					118BF02119EDF13E00B66C26 = {
 						CreatedOnToolsVersion = 6.0.1;
 						DevelopmentTeam = C6L3992RFB;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					118BF03619EDF13E00B66C26 = {
 						CreatedOnToolsVersion = 6.0.1;
+						LastSwiftMigration = 1010;
 						TestTargetID = 118BF02119EDF13E00B66C26;
 					};
 				};
@@ -214,7 +230,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				118BF02A19EDF13E00B66C26 /* ViewController.swift in Sources */,
+				F60A6AFD21924520009F073E /* SRCTabBarController.swift in Sources */,
+				F6957DFF203D047E003FFE3E /* Globals.swift in Sources */,
+				118BF02A19EDF13E00B66C26 /* ReverseCalcViewController.swift in Sources */,
 				F6957DFD203B6189003FFE3E /* Scores.swift in Sources */,
 				118BF02819EDF13E00B66C26 /* AppDelegate.swift in Sources */,
 			);
@@ -224,7 +242,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				118BF03E19EDF13E00B66C26 /* reverseapftTests.swift in Sources */,
+				F6632C54204A09FC00B73607 /* PushupTest.swift in Sources */,
+				F6632C55204A09FC00B73607 /* SitupTest.swift in Sources */,
+				F6957E01203E6961003FFE3E /* Scores.swift in Sources */,
+				118BF03E19EDF13E00B66C26 /* runTests.swift in Sources */,
+				F6957E02203E69CB003FFE3E /* Globals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,12 +284,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -316,12 +340,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -366,7 +392,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -385,7 +411,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -405,6 +431,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.twodayslate.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/reverseapft.app/reverseapft";
 			};
 			name = Debug;
@@ -421,6 +448,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.twodayslate.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/reverseapft.app/reverseapft";
 			};
 			name = Release;

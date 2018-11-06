@@ -8,23 +8,32 @@
 
 import UIKit
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var controller: ViewController?
 	
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 		
-		print("inside application")
+		printd("inside application")
 		
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.backgroundColor = UIColor.white
         
-        self.controller = ViewController()
+        let nav = SRCTabBarController()
+        nav.delegate = nav
         
-        self.window!.rootViewController = self.controller!
+        let revCalc = ReverseCalcViewController()
+        revCalc.tabBarItem = UITabBarItem(title: "Reversse Calculator", image: UIImage(named: "rev"), tag: 0)
+        
+        let acftLink = UIViewController()
+        acftLink.tabBarItem = UITabBarItem(title: "ACFT", image: UIImage(named: "star"), tag: 666)
+        
+        nav.viewControllers = [revCalc, acftLink]
+        
+        self.window!.rootViewController = nav
         
         self.window!.makeKeyAndVisible()
         

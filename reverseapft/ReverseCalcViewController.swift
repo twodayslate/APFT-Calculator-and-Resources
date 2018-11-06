@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate {
+class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate {
 
     var situpPicker : UIPickerView! = nil
     var pushupPicker : UIPickerView! = nil
@@ -27,7 +27,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		// hide status bar
+		// show/hide status bar
 		// https://stackoverflow.com/questions/46543470/hide-status-bar-swift-4
 		let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
 		statusBar.isHidden = false
@@ -37,47 +37,47 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         scrollview.translatesAutoresizingMaskIntoConstraints = false
         scrollview.delegate = self
         self.view.addSubview(scrollview)
-		self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollview]|", options: .alignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
-		self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollview]|", options: .alignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
+		self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[scrollview]-|", options: .alignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
+		self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[scrollview]-|", options: .alignAllCenterY, metrics: nil, views: ["scrollview": scrollview]))
         
         stack = UIStackView()
-		stack.axis = UILayoutConstraintAxis.vertical
+		stack.axis = NSLayoutConstraint.Axis.vertical
         //stack.alignment = UIStackViewAlignment.Fill
         //stack.distribution = UIStackViewDistribution.FillProportionally
         stack.spacing = 10
         stack.translatesAutoresizingMaskIntoConstraints = false
         let topConstraint = NSLayoutConstraint(
             item: stack,
-			attribute: NSLayoutAttribute.topMargin,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.topMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: scrollview,
-			attribute: NSLayoutAttribute.topMargin,
+			attribute: NSLayoutConstraint.Attribute.topMargin,
             multiplier: 1.0,
-			constant: UIApplication.shared.statusBarFrame.size.height + 10)
+			constant: 0)
         let leftConstraint = NSLayoutConstraint(
             item: stack,
-			attribute: NSLayoutAttribute.leading,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.leading,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: scrollview,
-			attribute: NSLayoutAttribute.leading,
+			attribute: NSLayoutConstraint.Attribute.leading,
             multiplier: 1.0,
-            constant: 20)
+            constant: 0)
         let rightConstraint = NSLayoutConstraint(
             item: stack,
-			attribute: NSLayoutAttribute.trailing,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.trailing,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: scrollview,
-			attribute: NSLayoutAttribute.trailing,
+			attribute: NSLayoutConstraint.Attribute.trailing,
             multiplier: 1.0,
-            constant: 20)
+            constant: 0)
         let widthCon = NSLayoutConstraint(
             item: stack,
-			attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.width,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: scrollview,
-            attribute: NSLayoutAttribute.width,
+            attribute: NSLayoutConstraint.Attribute.width,
             multiplier: 1.0,
-            constant: -60)
+            constant: 0)
         scrollview.addSubview(stack)
         scrollview.addConstraint(widthCon)
         scrollview.addConstraint(topConstraint)
@@ -94,7 +94,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         segment = UISegmentedControl(items: ["MALE", "FEMALE"]);
         //TODO: get from previous run
 		segment.selectedSegmentIndex = prefs.integer(forKey: "gender")
-		segment.addTarget(self, action: #selector(ViewController.updateChanged), for: UIControlEvents.valueChanged)
+		segment.addTarget(self, action: #selector(ReverseCalcViewController.updateChanged), for: UIControl.Event.valueChanged)
         stack.addArrangedSubview(segment)
         
         let border_zero = UIView()
@@ -102,10 +102,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 		border_zero.backgroundColor = UIColor.gray
         let borderHeight_zero = NSLayoutConstraint(
             item: border_zero,
-			attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_zero)
@@ -121,20 +121,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         inputAge.placeholder = "21"
         
 		inputAge.textAlignment = NSTextAlignment.right
-		inputAge.addTarget(self, action: #selector(ViewController.updateChanged), for: UIControlEvents.editingChanged)
+		inputAge.addTarget(self, action: #selector(ReverseCalcViewController.updateChanged), for: UIControl.Event.editingChanged)
         // you have to set the frame size otherwise the buttons will not work
-		let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+		let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
         let helperBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
-		let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissKeyboard))
+		let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(self.dismissKeyboard))
         helperBar.setItems([flexibleSpace, doneButton], animated: true)
         inputAge.inputAccessoryView = helperBar
         row_one.addArrangedSubview(inputAge)
         let inputCon = NSLayoutConstraint(
             item: inputAge,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.lessThanOrEqual,
+            attribute: NSLayoutConstraint.Attribute.width,
+            relatedBy: NSLayoutConstraint.Relation.lessThanOrEqual,
             toItem: row_one,
-            attribute: NSLayoutAttribute.width,
+            attribute: NSLayoutConstraint.Attribute.width,
             multiplier: 1.0,
             constant: 0)
         row_one.addConstraint(inputCon)
@@ -147,10 +147,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 		border.isHidden = false
         let borderHeight = NSLayoutConstraint(
             item: border,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border)
@@ -159,7 +159,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         let row_two = UIStackView()
         let column_one = UIStackView()
-        column_one.axis = UILayoutConstraintAxis.vertical
+        column_one.axis = NSLayoutConstraint.Axis.vertical
         let nameLabel_two = UILabel()
         nameLabel_two.text = "Pushups"
         nameLabel_two.textAlignment = NSTextAlignment.center
@@ -173,16 +173,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         row_two.addArrangedSubview(column_one)
         let thirdWidthConstraint_one = NSLayoutConstraint(
             item: column_one,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.width,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: row_two,
-            attribute: NSLayoutAttribute.width,
+            attribute: NSLayoutConstraint.Attribute.width,
             multiplier: (1.0/3.0),
             constant: 0)
         row_two.addConstraint(thirdWidthConstraint_one)
         
         let column_two = UIStackView()
-        column_two.axis = UILayoutConstraintAxis.vertical
+        column_two.axis = NSLayoutConstraint.Axis.vertical
         let nameLabel_three = UILabel()
         nameLabel_three.text = "Situps"
         nameLabel_three.textAlignment = NSTextAlignment.center
@@ -196,16 +196,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 row_two.addArrangedSubview(column_two)
         let thirdWidthConstraint_two = NSLayoutConstraint(
             item: column_two,
-			attribute: NSLayoutAttribute.width,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.width,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: row_two,
-			attribute: NSLayoutAttribute.width,
+			attribute: NSLayoutConstraint.Attribute.width,
             multiplier: (1.0/3.0),
             constant: 0)
         row_two.addConstraint(thirdWidthConstraint_two)
         
         let column_three = UIStackView()
-        column_three.axis = UILayoutConstraintAxis.vertical
+        column_three.axis = NSLayoutConstraint.Axis.vertical
         let nameLabel_four = UILabel()
         nameLabel_four.text = "Run"
         nameLabel_four.textAlignment = NSTextAlignment.center
@@ -219,10 +219,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 row_two.addArrangedSubview(column_three)
         let thirdWidthConstraint_three = NSLayoutConstraint(
             item: column_three,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.width,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: row_two,
-            attribute: NSLayoutAttribute.width,
+            attribute: NSLayoutConstraint.Attribute.width,
             multiplier: (1.0/3.0),
             constant: 0)
         row_two.addConstraint(thirdWidthConstraint_three)
@@ -234,10 +234,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         border_two.backgroundColor = UIColor.gray
         let borderHeight_two = NSLayoutConstraint(
             item: border_two,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_two)
@@ -259,10 +259,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         border_three.backgroundColor = UIColor.gray
         let borderHeight_three = NSLayoutConstraint(
             item: border_three,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_three)
@@ -284,10 +284,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         border_four.backgroundColor = UIColor.gray
         let borderHeight_four = NSLayoutConstraint(
             item: border_four,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_four)
@@ -309,10 +309,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         border_five.backgroundColor = UIColor.gray
         let borderHeight_five = NSLayoutConstraint(
             item: border_five,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: NSLayoutConstraint.Attribute.height,
+            relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: stack,
-            attribute: NSLayoutAttribute.height,
+            attribute: NSLayoutConstraint.Attribute.height,
             multiplier: 0.0,
             constant: 1)
         stack.addArrangedSubview(border_five)
@@ -334,8 +334,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print(self.view.frame)
-		self.scrollview.contentSize = CGSize(width: self.view.frame.width, height: stack.frame.height + UIApplication.shared.statusBarFrame.size.height+40)
+        printd("self.view.frame", self.view.frame)
+		self.scrollview.contentSize = CGSize(width: stack.frame.width, height: stack.frame.height + UIApplication.shared.statusBarFrame.size.height+40)
     }
 
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -343,7 +343,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 	
 	@objc func dismissKeyboard() {
-        print("dismissing keyboard")
+        printd("dismissing keyboard")
         self.resignFirstResponder()
         self.view.endEditing(false)
         updateChanged()
@@ -374,9 +374,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let newValue : Int = row + 30;
-        print("value selected = \(newValue)")
+		let score = row + 30
+		printd("row = \(row); score = \(newValue)")
 		let sum = runPicker.selectedRow(inComponent: 0) + pushupPicker.selectedRow(inComponent: 0) + situpPicker.selectedRow(inComponent: 0) + 90
-        print("new sum = \(sum)")
+        printd("New sum = \(sum)")
         valueLabel.text = String(sum)
         
         switch pickerView {
@@ -393,162 +394,33 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             break
         }
 		
-		let gender : NSString! = segment.titleForSegment(at: segment.selectedSegmentIndex)! as NSString
 		prefs.set(segment.selectedSegmentIndex, forKey: "gender")
-        
-        print("gender = \(gender)")
-        
-        //println(inputAge.text)
-        var age : Int! = Int(inputAge.text!)
-        if (age == nil) {
-            age = 21
-            inputAge.text = "" //placeholder is 21
-        }
+		Score.gender = Gender(rawValue: segment.selectedSegmentIndex)!
+        printd("gender = \(Score.gender)")
+		
+		let age : Int = Int(inputAge.text ?? "21") ?? 21
+		if age == 21 {
+			inputAge.text = "" //placeholder is 21
+		}
 		prefs.set(age, forKey: "age")
-        print("age = \(age)")
-        
-        
-       
-        
+		Score.age = age
+        printd("age = \(Score.age)")
+		
         switch pickerView {
-        case runPicker: print("Changing run value")
-		if(gender.isEqual(to: "MALE")) {
-                if(age < 22) {
-                    runLabel.text = String(maleRun21[row])
-                } else if(age < 27) {
-                    runLabel.text = String(maleRun26[row])
-                } else if(age < 32) {
-                    runLabel.text = String(maleRun31[row])
-                } else if(age < 37) {
-                    runLabel.text = String(maleRun36[row])
-                } else if(age < 42) {
-                    runLabel.text = String(maleRun41[row])
-                } else if(age < 47) {
-                    runLabel.text = String(maleRun46[row])
-                } else if(age < 52) {
-                    runLabel.text = String(maleRun51[row])
-                } else if(age < 57) {
-                    runLabel.text = String(maleRun56[row])
-                } else if(age < 62) {
-                    runLabel.text = String(maleRun61[row])
-                } else {
-                    runLabel.text = String(maleRun[row])
-                }
-            } else  { // is FEMALE
-                if(age < 22) {
-                    runLabel.text = String(femaleRun21[row])
-                } else if(age < 27) {
-                    runLabel.text = String(femaleRun26[row])
-                } else if(age < 32) {
-                    runLabel.text = String(femaleRun31[row])
-                } else if(age < 37) {
-                    runLabel.text = String(femaleRun36[row])
-                } else if(age < 42) {
-                    runLabel.text = String(femaleRun41[row])
-                } else if(age < 47) {
-                    runLabel.text = String(femaleRun46[row])
-                } else if(age < 52) {
-                    runLabel.text = String(femaleRun51[row])
-                } else if(age < 57) {
-                    runLabel.text = String(femaleRun56[row])
-                } else if(age < 62) {
-                    runLabel.text = String(femaleRun61[row])
-                } else {
-                    runLabel.text = String(femaleRun[row])
-                }
-            }
-        case situpPicker: print("Changing situp value")
-		if(gender.isEqual(to: "MALE")) {
-                if(age < 22) {
-                    situpLabel.text = String(maleSitup21[row])
-                } else if(age < 27) {
-                    situpLabel.text = String(maleSitup26[row])
-                } else if(age < 32) {
-                    situpLabel.text = String(maleSitup31[row])
-                } else if(age < 37) {
-                    situpLabel.text = String(maleSitup36[row])
-                } else if(age < 42) {
-                    situpLabel.text = String(maleSitup41[row])
-                } else if(age < 47) {
-                    situpLabel.text = String(maleSitup46[row])
-                } else if(age < 52) {
-                    situpLabel.text = String(maleSitup51[row])
-                } else if(age < 57) {
-                    situpLabel.text = String(maleSitup56[row])
-                } else if(age < 62) {
-                    situpLabel.text = String(maleSitup61[row])
-                } else {
-                    situpLabel.text = String(maleSitup[row])
-                }
-            } else  { // is FEMALE
-                if(age < 22) {
-                    situpLabel.text = String(femaleSitup21[row])
-                } else if(age < 27) {
-                    situpLabel.text = String(femaleSitup26[row])
-                } else if(age < 32) {
-                    situpLabel.text = String(femaleSitup31[row])
-                } else if(age < 37) {
-                    situpLabel.text = String(femaleSitup36[row])
-                } else if(age < 42) {
-                    situpLabel.text = String(femaleSitup41[row])
-                } else if(age < 47) {
-                    situpLabel.text = String(femaleSitup46[row])
-                } else if(age < 52) {
-                    situpLabel.text = String(femaleSitup51[row])
-                } else if(age < 57) {
-                    situpLabel.text = String(femaleSitup56[row])
-                } else if(age < 62) {
-                    situpLabel.text = String(femaleSitup61[row])
-                } else {
-                    situpLabel.text = String(femaleSitup[row])
-                }
-            }
-        default: print("Changing pushup value")
-		if(gender.isEqual(to: "MALE")) {
-                if(age < 22) {
-                    pushupLabel.text = String(malePushup21[row])
-                } else if(age < 27) {
-                    pushupLabel.text = String(malePushup26[row])
-                } else if(age < 32) {
-                    pushupLabel.text = String(malePushup31[row])
-                } else if(age < 37) {
-                    pushupLabel.text = String(malePushup36[row])
-                } else if(age < 42) {
-                    pushupLabel.text = String(malePushup41[row])
-                } else if(age < 47) {
-                    pushupLabel.text = String(malePushup46[row])
-                } else if(age < 52) {
-                    pushupLabel.text = String(malePushup51[row])
-                } else if(age < 57) {
-                    pushupLabel.text = String(malePushup56[row])
-                } else if(age < 62) {
-                    pushupLabel.text = String(malePushup61[row])
-                } else {
-                    pushupLabel.text = String(malePushup[row])
-                }
-            } else  { // is FEMALE
-                if(age < 22) {
-                    pushupLabel.text = String(femalePushup21[row])
-                } else if(age < 27) {
-                    pushupLabel.text = String(femalePushup26[row])
-                } else if(age < 32) {
-                    pushupLabel.text = String(femalePushup31[row])
-                } else if(age < 37) {
-                    pushupLabel.text = String(femalePushup36[row])
-                } else if(age < 42) {
-                    pushupLabel.text = String(femalePushup41[row])
-                } else if(age < 47) {
-                    pushupLabel.text = String(femalePushup46[row])
-                } else if(age < 52) {
-                    pushupLabel.text = String(femalePushup51[row])
-                } else if(age < 57) {
-                    pushupLabel.text = String(femalePushup56[row])
-                } else if(age < 62) {
-                    pushupLabel.text = String(femalePushup61[row])
-                } else {
-                    pushupLabel.text = String(femalePushup[row])
-                }
-            }
+        case runPicker:
+            printd("Changing run value")
+			runLabel.text = String(Score.runTime(forScore: score))
+			let index = runLabel.text?.index((runLabel.text?.startIndex)!, offsetBy: 2)
+			runLabel.text?.insert(":", at: index!)
+			break
+        case situpPicker:
+            printd("Changing situp value")
+			situpLabel.text = String(Score.situps(forScore: score))
+			break
+        default:
+            printd("Changing pushup value")
+			pushupLabel.text = String(Score.pushups(forScore: score))
+			break
         }
     }
 }

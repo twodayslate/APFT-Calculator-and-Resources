@@ -26,12 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.delegate = nav
         
         let revCalc = ReverseCalcViewController()
-        revCalc.tabBarItem = UITabBarItem(title: "Reversse Calculator", image: UIImage(named: "rev"), tag: 0)
+        revCalc.tabBarItem = UITabBarItem(title: "Reverse Calculator", image: UIImage(named: "rev"), tag: 0)
+        
+        let docs = DocNavigationController()
+        docs.tabBarItem = UITabBarItem(title: "Documents", image: UIImage(named: "docs"), tag: 1)
         
         let acftLink = UIViewController()
         acftLink.tabBarItem = UITabBarItem(title: "ACFT", image: UIImage(named: "star"), tag: 666)
         
-        nav.viewControllers = [revCalc, acftLink]
+        nav.viewControllers = [revCalc, docs, acftLink]
         
         self.window!.rootViewController = nav
         

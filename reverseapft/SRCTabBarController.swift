@@ -11,37 +11,44 @@ import UIKit
 import StoreKit
 
 class SRCTabBarController: UITabBarController, UITabBarControllerDelegate, SKStoreProductViewControllerDelegate {
+    var acftStoreProduct: SKStoreProductViewController?
+    
+    func createAcftStoreProduct(force: Bool = false) {
+        if (self.acftStoreProduct == nil || force) {
+            self.acftStoreProduct = SKStoreProductViewController()
+            self.acftStoreProduct?.delegate = self
+            let params = [
+                SKStoreProductParameterITunesItemIdentifier:1439376176
+            ]
+            self.acftStoreProduct!.loadProduct(withParameters: params, completionBlock: { status, _ in
+                printd("done loading store product", status)
+                if(!status) {
+                    self.createAcftStoreProduct(force: true)
+                }
+            })
+        }
+    }
+    
     func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
         viewController.dismiss(animated: true, completion: nil)
+        self.createAcftStoreProduct(force: true) // if it isn't recreated then the status bar covers up the navigation
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        print("should select?")
         return viewController.tabBarItem.tag != 666
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.createAcftStoreProduct()
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if(item.tag == 666) {
-            print("did select")
-            //            self.selectedViewController = self.viewControllers?.first
-            //            self.selectedIndex = 0
-            //            self.tabBar(tabBar, didSelect: (self.tabBar.items?.first)!)
-            let app = URL(string: "itms-apps://itunes.apple.com/app/id/1439376176?mt=8")
+            //let app = URL(string: "itms-apps://itunes.apple.com/app/id/1439376176?mt=8")
             //let link = URL(string: "https://itunes.apple.com/us/app/acft-calculator-and-resources/id1439376176?mt=8")
-            let vc: SKStoreProductViewController = SKStoreProductViewController()
-            vc.delegate = self
-            let params = [
-                SKStoreProductParameterITunesItemIdentifier:1439376176
-            ]
-            vc.loadProduct(withParameters: params, completionBlock: { status, _ in
-                print("done loading store product", status)
-                if(!status) {
-                    //UIApplication.shared.open(app!, options: [:], completionHandler: nil)
-                }
-            })
-            self.present(vc, animated: true, completion: {
-                print("done presenting")
-            })
+            self.createAcftStoreProduct()
+            self.present(self.acftStoreProduct!, animated: true, completion: nil)
         }
     }
 }

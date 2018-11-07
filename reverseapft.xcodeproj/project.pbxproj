@@ -13,6 +13,7 @@
 		118BF03219EDF13E00B66C26 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 118BF03019EDF13E00B66C26 /* LaunchScreen.xib */; };
 		118BF03E19EDF13E00B66C26 /* runTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118BF03D19EDF13E00B66C26 /* runTests.swift */; };
 		F60A6AFD21924520009F073E /* SRCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60A6AFC21924520009F073E /* SRCTabBarController.swift */; };
+		F60A6AFF21927F6E009F073E /* DocViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60A6AFE21927F6E009F073E /* DocViewController.swift */; };
 		F6632C54204A09FC00B73607 /* PushupTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6632C52204A09FC00B73607 /* PushupTest.swift */; };
 		F6632C55204A09FC00B73607 /* SitupTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6632C53204A09FC00B73607 /* SitupTest.swift */; };
 		F6957DFD203B6189003FFE3E /* Scores.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6957DFC203B6189003FFE3E /* Scores.swift */; };
@@ -42,6 +43,7 @@
 		118BF03C19EDF13E00B66C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		118BF03D19EDF13E00B66C26 /* runTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = runTests.swift; sourceTree = "<group>"; };
 		F60A6AFC21924520009F073E /* SRCTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRCTabBarController.swift; sourceTree = "<group>"; };
+		F60A6AFE21927F6E009F073E /* DocViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocViewController.swift; sourceTree = "<group>"; };
 		F6632C52204A09FC00B73607 /* PushupTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushupTest.swift; sourceTree = "<group>"; };
 		F6632C53204A09FC00B73607 /* SitupTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SitupTest.swift; sourceTree = "<group>"; };
 		F6957DFC203B6189003FFE3E /* Scores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scores.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				118BF02719EDF13E00B66C26 /* AppDelegate.swift */,
+				F60A6AFE21927F6E009F073E /* DocViewController.swift */,
 				F60A6AFC21924520009F073E /* SRCTabBarController.swift */,
 				F6957DFE203D047E003FFE3E /* Globals.swift */,
 				118BF02919EDF13E00B66C26 /* ReverseCalcViewController.swift */,
@@ -233,6 +236,7 @@
 				F60A6AFD21924520009F073E /* SRCTabBarController.swift in Sources */,
 				F6957DFF203D047E003FFE3E /* Globals.swift in Sources */,
 				118BF02A19EDF13E00B66C26 /* ReverseCalcViewController.swift in Sources */,
+				F60A6AFF21927F6E009F073E /* DocViewController.swift in Sources */,
 				F6957DFD203B6189003FFE3E /* Scores.swift in Sources */,
 				118BF02819EDF13E00B66C26 /* AppDelegate.swift in Sources */,
 			);
@@ -381,12 +385,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C6L3992RFB;
 				INFOPLIST_FILE = reverseapft/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.twodayslate.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -400,12 +405,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C6L3992RFB;
 				INFOPLIST_FILE = reverseapft/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.twodayslate.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

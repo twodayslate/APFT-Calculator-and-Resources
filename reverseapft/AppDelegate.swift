@@ -34,15 +34,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let acftLink = UIViewController()
         acftLink.tabBarItem = UITabBarItem(title: "ACFT", image: UIImage(named: "star"), tag: 666)
         
-        nav.viewControllers = [revCalc, docs, acftLink]
+        let instructions = InstructionsViewController()
+        instructions.tabBarItem = UITabBarItem(title: "Instructions", image: UIImage(named: "manual"), tag: 2)
+        
+        nav.viewControllers = [revCalc, instructions, docs, acftLink]
         
         self.window!.rootViewController = nav
         
         self.window!.makeKeyAndVisible()
         
+        self.update_preferences()
+        
         return true
     }
 
+    func update_preferences() {
+        let version: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let build: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        UserDefaults.standard.set(version + "-" + build, forKey: "version")
+    }
+    
 	func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

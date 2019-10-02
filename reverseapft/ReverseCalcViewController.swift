@@ -29,8 +29,8 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
 		
 		// show/hide status bar
 		// https://stackoverflow.com/questions/46543470/hide-status-bar-swift-4
-		let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-		statusBar.isHidden = false
+//		let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+//		statusBar.isHidden = false
 		
         scrollview = UIScrollView()
         //TODO: add gradient to top
@@ -98,8 +98,8 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
         stack.addArrangedSubview(segment)
         
         let border_zero = UIView()
-		border_zero.layer.backgroundColor = UIColor.gray.cgColor
-		border_zero.backgroundColor = UIColor.gray
+		//border_zero.layer.backgroundColor = UIColor.systemGray.cgColor
+		border_zero.backgroundColor = UIColor.systemGray
         let borderHeight_zero = NSLayoutConstraint(
             item: border_zero,
 			attribute: NSLayoutConstraint.Attribute.height,
@@ -141,8 +141,8 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
         stack.addArrangedSubview(row_one)
         
         let border = UIView()
-        border.layer.backgroundColor = UIColor.gray.cgColor
-        border.backgroundColor = UIColor.gray
+        //border.layer.backgroundColor = UIColor.systemGray.cgColor
+        border.backgroundColor = UIColor.systemGray
         border.clipsToBounds = true
 		border.isHidden = false
         let borderHeight = NSLayoutConstraint(
@@ -230,8 +230,8 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
         stack.addArrangedSubview(row_two) //pickers
         
         let border_two = UIView()
-        border_two.layer.backgroundColor = UIColor.gray.cgColor
-        border_two.backgroundColor = UIColor.gray
+        //border_two.layer.backgroundColor = UIColor.systemGray.cgColor
+        border_two.backgroundColor = UIColor.systemGray
         let borderHeight_two = NSLayoutConstraint(
             item: border_two,
             attribute: NSLayoutConstraint.Attribute.height,
@@ -250,13 +250,13 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
         valueLabel = UILabel()
         valueLabel.text = "-"
         valueLabel.textAlignment = NSTextAlignment.right
-        valueLabel.textColor = UIColor.gray
+        valueLabel.textColor = UIColor.systemGray
         row_three.addArrangedSubview(valueLabel)
         stack.addArrangedSubview(row_three)
         
         let border_three = UIView()
-        border_three.layer.backgroundColor = UIColor.gray.cgColor
-        border_three.backgroundColor = UIColor.gray
+        border_three.layer.backgroundColor = UIColor.systemGray.cgColor
+        border_three.backgroundColor = UIColor.systemGray
         let borderHeight_three = NSLayoutConstraint(
             item: border_three,
             attribute: NSLayoutConstraint.Attribute.height,
@@ -275,13 +275,13 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
         pushupLabel = UILabel()
         pushupLabel.text = "-"
         pushupLabel.textAlignment = NSTextAlignment.right
-        pushupLabel.textColor = UIColor.gray
+        pushupLabel.textColor = UIColor.systemGray
         row_four.addArrangedSubview(pushupLabel)
         stack.addArrangedSubview(row_four)
         
         let border_four = UIView()
-        border_four.layer.backgroundColor = UIColor.gray.cgColor
-        border_four.backgroundColor = UIColor.gray
+        border_four.layer.backgroundColor = UIColor.systemGray.cgColor
+        border_four.backgroundColor = UIColor.systemGray
         let borderHeight_four = NSLayoutConstraint(
             item: border_four,
             attribute: NSLayoutConstraint.Attribute.height,
@@ -300,13 +300,13 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
         situpLabel = UILabel()
         situpLabel.text = "-"
         situpLabel.textAlignment = NSTextAlignment.right
-        situpLabel.textColor = UIColor.gray
+        situpLabel.textColor = UIColor.systemGray
         row_five.addArrangedSubview(situpLabel)
         stack.addArrangedSubview(row_five)
         
         let border_five = UIView()
-        border_five.layer.backgroundColor = UIColor.gray.cgColor
-        border_five.backgroundColor = UIColor.gray
+        border_five.layer.backgroundColor = UIColor.systemGray.cgColor
+        border_five.backgroundColor = UIColor.systemGray
         let borderHeight_five = NSLayoutConstraint(
             item: border_five,
             attribute: NSLayoutConstraint.Attribute.height,
@@ -325,7 +325,7 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
         runLabel = UILabel()
         runLabel.text = "-"
         runLabel.textAlignment = NSTextAlignment.right
-        runLabel.textColor = UIColor.gray
+        runLabel.textColor = UIColor.systemGray
         row_six.addArrangedSubview(runLabel)
         stack.addArrangedSubview(row_six)
         
@@ -342,10 +342,8 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.dismissKeyboard()
     }
 	
-	@objc func dismissKeyboard() {
-        printd("dismissing keyboard")
-        self.resignFirstResponder()
-        self.view.endEditing(false)
+	@objc override func dismissKeyboard() {
+        super.dismissKeyboard()
         updateChanged()
     }
     

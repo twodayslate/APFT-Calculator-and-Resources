@@ -48,6 +48,7 @@ class SRCTabBarController: UITabBarController, UITabBarControllerDelegate, SKSto
             //let app = URL(string: "itms-apps://itunes.apple.com/app/id/1439376176?mt=8")
             //let link = URL(string: "https://itunes.apple.com/us/app/acft-calculator-and-resources/id1439376176?mt=8")
             self.createAcftStoreProduct()
+            self.acftStoreProduct?.popoverPresentationController?.sourceView = self.selectedViewController?.view
             self.present(self.acftStoreProduct!, animated: true, completion: nil)
         }
     }

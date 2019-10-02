@@ -454,7 +454,7 @@ class Score {
 	public static func score(forRun time: Int) -> Int {
         print("getting score for: ", time)
         let rar = Score.run[self.gender.rawValue][Score.index(forAge: Score.age)]
-		let index = min(Score.index(forRun: time), rar.count-1)
+		let index = max(0, min(Score.index(forRun: time), rar.count-1))
         print(rar, index, rar.count)
 		return rar[index]
 	}

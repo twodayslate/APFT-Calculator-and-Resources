@@ -20,24 +20,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		printd("inside application")
 		
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.backgroundColor = UIColor.white
+        if #available(iOS 13.0, *) {
+            self.window?.backgroundColor = UIColor.systemBackground
+        } else {
+            self.window?.backgroundColor = .white
+        }
         
         let nav = SRCTabBarController()
         nav.delegate = nav
         
+        let calc = CalcViewController()
+        calc.tabBarItem = UITabBarItem(title: "Calculator", image: UIImage(named: "calc"), tag: 0)
+        
         let revCalc = ReverseCalcViewController()
-        revCalc.tabBarItem = UITabBarItem(title: "Reverse Calculator", image: UIImage(named: "rev"), tag: 0)
+        revCalc.tabBarItem = UITabBarItem(title: "Reverse Calculator", image: UIImage(named: "rev"), tag: 1)
         
         let docs = DocNavigationController()
-        docs.tabBarItem = UITabBarItem(title: "Documents", image: UIImage(named: "docs"), tag: 1)
+        docs.tabBarItem = UITabBarItem(title: "Documents", image: UIImage(named: "docs"), tag: 2)
         
         let acftLink = UIViewController()
         acftLink.tabBarItem = UITabBarItem(title: "ACFT", image: UIImage(named: "star"), tag: 666)
         
         let instructions = InstructionsViewController()
-        instructions.tabBarItem = UITabBarItem(title: "Instructions", image: UIImage(named: "manual"), tag: 2)
+        instructions.tabBarItem = UITabBarItem(title: "Instructions", image: UIImage(named: "manual"), tag: 3)
         
-        nav.viewControllers = [revCalc, instructions, docs, acftLink]
+        nav.viewControllers = [calc, revCalc, instructions, docs, acftLink]
         
         self.window!.rootViewController = nav
         

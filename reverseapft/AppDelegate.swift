@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
         self.window = UIWindow(frame: UIScreen.main.bounds)
         if #available(iOS 13.0, *) {
-            self.window?.backgroundColor = UIColor.systemBackground
+            self.window?.backgroundColor = UIColor.black
         } else {
             self.window?.backgroundColor = .white
         }

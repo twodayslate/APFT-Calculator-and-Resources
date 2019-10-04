@@ -14,6 +14,12 @@ class CalcViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        if #available(iOS 13.0, *) {
+            self.view.backgroundColor = UIColor.systemBackground
+        } else {
+            self.view.backgroundColor = .white
+        }
+        
         //TODO: add gradient to top
         scrollview.translatesAutoresizingMaskIntoConstraints = false
         scrollview.delegate = self

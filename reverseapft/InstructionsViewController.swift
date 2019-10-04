@@ -260,6 +260,12 @@ class InstructionsViewController: UIViewController, UIScrollViewDelegate, AVSpee
         
         NotificationCenter.default.addObserver(self, selector: #selector(defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
         
+        if #available(iOS 13.0, *) {
+            self.view.backgroundColor = UIColor.systemBackground
+        } else {
+            self.view.backgroundColor = .white
+        }
+        
         scrollview.translatesAutoresizingMaskIntoConstraints = false
         scrollview.delegate = self
         self.view.addSubview(scrollview)

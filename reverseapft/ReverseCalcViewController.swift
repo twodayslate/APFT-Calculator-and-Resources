@@ -31,6 +31,12 @@ class ReverseCalcViewController: UIViewController, UIPickerViewDelegate, UIPicke
 		// https://stackoverflow.com/questions/46543470/hide-status-bar-swift-4
 //		let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
 //		statusBar.isHidden = false
+        
+        if #available(iOS 13.0, *) {
+            self.view.backgroundColor = UIColor.systemBackground
+        } else {
+            self.view.backgroundColor = .white
+        }
 		
         scrollview = UIScrollView()
         //TODO: add gradient to top

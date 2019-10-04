@@ -41,6 +41,12 @@ class SRCTabBarController: UITabBarController, UITabBarControllerDelegate, SKSto
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createAcftStoreProduct()
+        
+        if #available(iOS 13.0, *) {
+            self.view.backgroundColor = UIColor.systemBackground
+        } else {
+            self.view.backgroundColor = .white
+        }
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
